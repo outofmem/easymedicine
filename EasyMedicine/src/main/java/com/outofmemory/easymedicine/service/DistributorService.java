@@ -60,16 +60,15 @@ public class DistributorService {
 		LOGGER.info("Following distributor is registered succesfully : "
 				+ distributor);
 		// we need to send a registration notification
-		// TODO : Need to remove the following comment
-		// Notification regitrationNotification = new Notification(
-		// distributor.getEmailAddress(), distributor.getMobileNumber(),
-		// messageSource.getMessage(
-		// "distributor.registration.notification.subject",
-		// new Object[0], Locale.ENGLISH),
-		// messageSource.getMessage(
-		// "distributor.registration.notification.message",
-		// new Object[0], Locale.ENGLISH));
-		// sendNotification(regitrationNotification);
+		Notification regitrationNotification = new Notification(
+				distributor.getEmailAddress(), distributor.getMobileNumber(),
+				messageSource.getMessage(
+						"distributor.registration.notification.subject",
+						new Object[0], Locale.ENGLISH),
+				messageSource.getMessage(
+						"distributor.registration.notification.message",
+						new Object[0], Locale.ENGLISH));
+		sendNotification(regitrationNotification);
 		return true;
 	}
 
@@ -151,6 +150,7 @@ public class DistributorService {
 							Integer.toString(random.nextInt())));
 			if (passwordUpdated) {
 				LOGGER.debug("Password is reset for " + emailId);
+				// Send reset password notification
 				Notification passwordResetNotification = new Notification(
 						distributor.getEmailAddress(),
 						distributor.getMobileNumber(),
@@ -185,6 +185,7 @@ public class DistributorService {
 							Integer.toString(random.nextInt())));
 			if (passwordUpdated) {
 				LOGGER.debug("Password is changed for " + emailId);
+				// Send the password change notification
 				Notification passwordChangeNotification = new Notification(
 						distributor.getEmailAddress(),
 						distributor.getMobileNumber(),
@@ -195,8 +196,7 @@ public class DistributorService {
 						messageSource
 								.getMessage(
 										"distributor.password.change.notification.message",
-										new Object[0],
-										Locale.ENGLISH));
+										new Object[0], Locale.ENGLISH));
 				sendNotification(passwordChangeNotification);
 			}
 		}
