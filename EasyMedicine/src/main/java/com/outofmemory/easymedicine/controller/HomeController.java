@@ -32,6 +32,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		LOGGER.info("Welcome to EasyMedicine! The client locale is {}.", locale);
+		model.addAttribute("tabIndex", 0);
 		return "home";
 	}
 

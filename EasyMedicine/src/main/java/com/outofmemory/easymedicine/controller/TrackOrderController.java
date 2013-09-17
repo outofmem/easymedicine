@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * 
  */
 @Controller
+@RequestMapping(value = "/trackOrder")
 public class TrackOrderController {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(TrackOrderController.class);
@@ -28,8 +29,8 @@ public class TrackOrderController {
 	 *            model map contains the request parameters from the page
 	 * @return The name of the html page to render
 	 */
-	@RequestMapping(value = "/trackOrderHome", method = RequestMethod.GET)
-	public String trackOrderHome(Model model) {
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String home(Model model) {
 		LOGGER.info("Forwarding to track order page.");
 		return "trackOrderHome";
 	}

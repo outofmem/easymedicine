@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+	
+	<!-- Automatically scan and detect beans -->
+	<context:component-scan base-package="com.outofmemory.easymedicine" />
+	
+	<!-- The following bean definitions are for sending e-mail notification -->
+	<bean id="emailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="mail.lexmark.com"/>
+	</bean>
+
+	<bean id="templateEmailMessage" class="org.springframework.mail.SimpleMailMessage">
+		<property name="from" value="easymedicine@outofmemory.co.in"/>
+	</bean>
+	
 </beans>

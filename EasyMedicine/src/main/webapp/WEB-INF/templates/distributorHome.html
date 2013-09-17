@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<script type="text/javascript" src="./resources/js/distributorHome.js"></script>
+<link rel="stylesheet" type="text/css" href="./resources/themes/distributorHome.css" />
+</head>
+<body>
+	<div id="tabs-3">
+		<div id="sectionWrapper">
+			<input type="hidden" id="activeSection" th:value="${activeSection}"/>
+			<!-- <Preface Section> -->
+			<div id="preface" class="preface">
+				<form action="#" id="prefaceForm">
+					<fieldset>
+						<p style="font-weight: bolder; font-size: larger;" th:text="#{distributor.home.preface.message}"></p>
+					</fieldset>
+					<p class="change_link">
+		                <label th:text="#{label.already.a.member}"></label>
+		                <a href="#login" id="loginLink" rel="login" th:text="#{label.link.go.and.login}" class="linkSection"></a>
+		            </p>
+		            <p class="change_link">
+		                <label th:text="#{label.not.a.member.yet}"></label>
+		                <a href="#register" id="registerLink" rel="register" th:text="#{label.link.join.us}" class="linkSection"></a>
+		            </p>
+				</form>
+			</div>
+			<!-- </Preface Section> -->
+			<!-- <Login Section> -->
+			<div id="login" class="login">
+				<form action="#" id="loginForm" autocomplete="on">
+					<fieldset>
+						<h1 th:text="#{label.header.login}"></h1>
+						<p>
+							<div id="loginErrDiv" class="error" style="display: none;" th:text="#{error.message.authentication.failed}"></div>
+						</p>
+						<p>
+							<input type="email" name="loginEmailId" id="loginEmailId" placeholder="Your E-mail" required="required"/>
+						</p>
+						<p>
+							<input type="password" name="loginPassword" id="loginPassword" placeholder="Your Password" required="required"/>
+						</p>
+						<p class="login button">
+							<input type="submit" id="loginButton" th:value="#{label.button.login}"/>
+						</p>
+					</fieldset>
+					<p class="change_link">
+		                <label th:text="#{label.forgot.password}"></label>
+		                <a href="#forgotPassword" id="forgotPasswordLink" rel="forgotPassword" th:text="#{label.reset.password}" class="linkSection"></a>
+		            </p>
+					<p class="change_link">
+		                <label th:text="#{label.not.a.member.yet}"></label>
+		                <a href="#register" id="registerLink" rel="register" th:text="#{label.link.join.us}" class="linkSection"></a>
+		            </p>
+				</form>
+			</div>
+			<!-- </Login Section> -->
+			
+			<!-- <Forgot Password Section> -->
+			<div id="forgotPassword" class="forgotPassword">
+				<form action="#" id="forgotPasswordForm" autocomplete="on">
+					<fieldset>
+						<h1 th:text="#{label.header.forgot.password}"></h1>
+						<p>
+							<div id="forgotPwdErrDiv" class="error" style="display: none;" th:text="#{error.message.reset.password.failed}"></div>
+						</p>
+						<p>
+							<input type="email" name="forgotPwdEmailId" id="forgotPwdEmailId" placeholder="Your E-mail" required="required"/>
+						</p>
+						<p class="resetPassword button">
+							<input type="submit" id="resetPasswordButton" th:value="#{label.reset.password}"/>
+						</p>
+					</fieldset>
+					<p class="change_link">
+		                <label th:text="#{label.got.password}"></label>
+		                <a href="#login" id="loginLink" rel="login" th:text="#{label.link.go.and.login}" class="linkSection"></a>
+		            </p>
+				</form>
+			</div>
+			<!-- </Forgot Password Section> -->
+			
+			<!-- <Registration Section> -->
+			<div id="register" class="register">
+				<form action="#" id="registerForm" autocomplete="on">
+					<fieldset>
+						<h1 th:text="#{label.header.signup}"></h1>
+						<p>
+							<input type="email" name="signUpEmailId" id="signUpEmailId" placeholder="Your E-mail" required="required"/>
+							<div id="signUpEmailIdErrDiv" class="fielderror" style="display: none;" th:text="#{error.message.signup.email}"></div>
+						</p>
+						<p>
+							<input type="password" name="signUpPassword" id="signUpPassword" placeholder="Your Password" required="required"/>
+							<div id="signUpPasswordErrDiv" class="fielderror" style="display: none;" th:text="#{error.message.password}"></div>
+						</p>
+						<p>
+							<input type="password" name="signUpConfirmPassword" id="signUpConfirmPassword" placeholder="Confirm Your Password" required="required"/>
+							<div id="signUpConfirmPasswordErrDiv" class="fielderror" style="display: none;" th:text="#{error.message.confirm.password}"></div>
+						</p>
+						<p>
+							<input type="text" name="signUpMobileNumber" id="signUpMobileNumber" placeholder="Your 10 digit mobile number" required="required" pattern="\d{10}"/>
+							<div id="signUpMobileNumberErrDiv" class="fielderror" style="display: none;" th:text="#{error.message.signup.mobile}"></div>
+						</p>
+						<fieldset>
+							<legend th:text="#{label.medicine.store.details}"></legend>
+							<p>
+								<input type="text" name="signUpStoreName" id="signUpStoreName" placeholder="Name" required="required"/>
+								<div id="signUpStoreNameErrDiv" class="fielderror" style="display: none;" th:text="#{error.message.signup.store}"></div>
+							</p>
+							<p>
+								<input type="text" name="signUpStoreAddress" id="signUpStoreAddress" placeholder="Address" required="required"/>
+							</p>
+							<p>
+								<input type="text" name="signUpStoreLocality" id="signUpStoreLocality" placeholder="Locality" required="required"/>
+							</p>
+							<p>
+								<select name="signUpStoreCity" id="signUpStoreCity" required="required">
+									<option value="">Select City</option>
+									<option th:each="city : ${cities}" th:value="${city}" th:text="${city}"></option>
+								</select>
+							</p>
+							<p>
+								<input type="text" name="signUpStorePin" id="signUpStorePin" placeholder="6 digit PIN" required="required" pattern="\d{6}"/>
+							</p>
+						</fieldset>
+						<p class="signup button">
+							<input type="submit" id="signupButton" th:value="#{label.button.signup}"/>
+						</p>
+					</fieldset>
+					<p class="change_link">
+		                <label th:text="#{label.already.a.member}"></label>
+		                <a href="#login" id="loginLink" rel="login" th:text="#{label.link.go.and.login}" class="linkSection"></a>
+		            </p>
+				</form>
+			</div>
+			<!-- </Registration Section> -->
+			
+			<!-- <Logged In Distributor Section> -->
+			<div id="loggedInDistributor" class="loggedInDistributor">
+				<input type="hidden" id="emailId"/>
+				<div id="distributorTabs">
+					<ul>
+						<li><a href="#orderNotification" th:text="#{label.order.notification}"></a></li>
+						<li><a href="#changePassword" th:text="#{label.change.password}"></a></li>
+					</ul>
+					<div id="orderNotification">
+						You do not have any order notification!!!
+					</div>
+					<div id="changePassword">
+						<form action="#" id="changePasswordForm" autocomplete="on">
+							<fieldset>
+								<h1 th:text="#{label.change.password}"></h1>
+								<p>
+									<div id="changePwdErrDiv" class="error" style="display: none;" th:text="#{error.message.change.password.failed}"></div>
+								</p>
+								<p>
+									<input type="password" name="changePwdOldPassword" id="changePwdOldPassword" placeholder="Old Password" required="required"/>
+								</p>
+								<p>
+									<input type="password" name="changePwdNewPassword" id="changePwdNewPassword" placeholder="New Password" required="required"/>
+									<div id="changePwdNewPasswordErrDiv" class="fielderror" style="display: none;" th:text="#{error.message.password}"></div>
+								</p>
+								<p>
+									<input type="password" name="changePwdConfirmNewPassword" id="changePwdConfirmNewPassword" placeholder="Confirm New Password" required="required"/>
+									<div id="changePwdConfirmNewPasswordErrDiv" class="fielderror" style="display: none;" th:text="#{error.message.confirm.password}"></div>
+								</p>
+								<p class="changePassword button">
+									<input type="submit" id="changePasswordButton" th:value="#{label.change.password}"/>
+								</p>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				<p class="logout button">
+					<input type="button" id="logoutButton" th:value="#{label.button.logout}"/>
+				</p>
+			</div>
+			<!-- </Logged In Distributor Section> -->
+		</div>
+	</div>
+</body>
+</html>

@@ -10,6 +10,8 @@
 	<properties>
 		<java-version>1.6</java-version>
 		<org.springframework.version>3.2.3.RELEASE</org.springframework.version>
+		<javax.activation.version>1.1.1</javax.activation.version>
+		<javax.mail.version>1.4.7</javax.mail.version>
 		<org.aspectj.version>1.7.2</org.aspectj.version>
 		<org.slf4j.version>1.6.6</org.slf4j.version>
 		<org.thymeleaf.version>2.0.17</org.thymeleaf.version>
@@ -22,6 +24,7 @@
 		<commons.net.version>3.3</commons.net.version>
 		<json.lib.version>2.4</json.lib.version>
 		<jackson.version>1.8.0</jackson.version>
+		<org.mongodb.version>2.11.2</org.mongodb.version>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -55,6 +58,26 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+            
+        <!-- Java Mail -->
+        <dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>activation</artifactId>
+			<version>${javax.activation.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>${javax.mail.version}</version>
+		</dependency>
+            
             
         <!-- Apache Commons -->
         
@@ -122,6 +145,12 @@
 			<version>${org.thymeleaf.version}</version>
 		</dependency>
             
+        <!-- mongodb : java driver -->
+        <dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>${org.mongodb.version}</version>
+		</dependency>
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
