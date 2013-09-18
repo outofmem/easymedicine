@@ -5,8 +5,21 @@
 </head>
 <body>
 	<div id="tabs-1">
-		<h2>Get free home delivery of your ordered medicine</h2>
-		<p>Get free home delivery of your ordered medicine.</p>
+		<div id="orderMedicineSectionWrapper">
+			<input type="hidden" id="activeSection" th:value="${activeSection}"/>
+			<!-- Preface Section -->
+			<div id="preface" class="preface">
+				<form action="#" id="prefaceForm">
+					<fieldset>
+						<p style="font-weight: bolder; font-size: larger;" th:text="#{order.medicine.home.preface.message}"></p>
+					</fieldset>
+					<p class="change_link">
+		                <label th:text="#{label.impressed}"></label>
+		                <a href="#orderNow" id="orderNowLink" rel="orderNow" th:text="#{label.link.order.now}" class="linkSection"></a>
+		            </p>
+				</form>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

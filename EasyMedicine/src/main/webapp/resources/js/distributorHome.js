@@ -10,13 +10,12 @@
  */
 $(function() {
 	//the section wrapper (includes all sections)
-	var sectionWrapper   = $('#sectionWrapper'),	 
+	var distributorSectionWrapper   = $('#distributorSectionWrapper'),	 
 	//the active section value is set in hidden field
 	activeSectionVal = $('#activeSection').val();
-
 	//Hide those sections who does not have a class equal to the activeSectionVal.
 	//At a time just one section is active and visible
-	sectionWrapper.children('div').each(function(i){
+	distributorSectionWrapper.children('div').each(function(i){
 	    var theSectionDiv    = $(this);
 	    //solve the inline display none problem when using fadeIn/fadeOut
 	    if(!theSectionDiv.hasClass(activeSectionVal)) {
@@ -26,9 +25,9 @@ $(function() {
 	    }	    
 	});
 	//the current section is the one with class active
-	var activeSection    = sectionWrapper.children('div.active'),   
+	var activeSection    = distributorSectionWrapper.children('div.active'),   
 	//the switch section links
-	linkSections       = sectionWrapper.find('.linkSection');
+	linkSections       = distributorSectionWrapper.find('.linkSection');
 	//attach the click handler with the section switch links
 	linkSections.bind('click',function(e){
 		var link   = $(this);
@@ -36,29 +35,6 @@ $(function() {
 	    toggleSection(target);
 	   	e.preventDefault();
 	});
-	
-	/**
-	 * This function is getting reused to toggle between sections
-	 * @param target The name of the targetted div
-	 */
-	function toggleSection(target) {
-		activeSection.fadeOut(400,function(){
-	        //remove class "active" from current form
-	        activeSection.removeClass('active');
-	        //new current form
-	        activeSection= sectionWrapper.children('div.'+target);
-	        //animate the wrapper
-	        sectionWrapper.stop()
-	                     .animate({
-	                        //as of now nothing needed
-	                     },500,function(){
-	                        //new form gets class "active"
-	                        activeSection.addClass('active');
-	                        //show the new form
-	                        activeSection.fadeIn(400);
-	                     });
-	    });
-	}
 	
 	//attach event handler on change of the sign up e-mail id, an AJAX request
 	//is sent to server to check whether given e-mail is already registered or not
@@ -228,6 +204,29 @@ $(function() {
 	//--------------------------------------------------------------------------------------------
 	//The below section is for reusable functions. Please add all these type of functions below.
 	//--------------------------------------------------------------------------------------------
+	
+	/**
+	 * This function is getting reused to toggle between sections
+	 * @param target The name of the targetted div
+	 */
+	function toggleSection(target) {
+		activeSection.fadeOut(400,function(){
+	        //remove class "active" from current form
+	        activeSection.removeClass('active');
+	        //new current form
+	        activeSection= distributorSectionWrapper.children('div.'+target);
+	        //animate the wrapper
+	        distributorSectionWrapper.stop()
+	                     .animate({
+	                        //as of now nothing needed
+	                     },500,function(){
+	                        //new form gets class "active"
+	                        activeSection.addClass('active');
+	                        //show the new form
+	                        activeSection.fadeIn(400);
+	                     });
+	    });
+	}
 	
 	/**
 	 * The below function fires an AJAX request to check whether the given store is already registered or not

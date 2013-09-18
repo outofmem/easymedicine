@@ -32,6 +32,7 @@ public class OrderMedicineController {
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Model model) {
 		LOGGER.info("Forwarding to order medicine page.");
+		model.addAttribute("activeSection", "preface");
 		return "orderMedicineHome";
 	}
 }

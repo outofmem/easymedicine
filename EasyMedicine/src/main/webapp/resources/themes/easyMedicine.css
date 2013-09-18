@@ -32,7 +32,7 @@
     border-radius: 5px;
 }
 
-#sectionWrapper h1 {
+#tabs h1 {
     font-size: 35px;
     color: rgb(6, 106, 117);
     padding: 2px 0 10px 0;
@@ -51,7 +51,7 @@ input {
  		outline: none;
 }
 
-#sectionWrapper legend {
+#tabs legend {
 	color: rgb(6, 106, 117); 
     font-style: italic;
     font-weight: bold;
@@ -59,7 +59,7 @@ input {
 }
 /* all the input except submit */
 #signUpStoreCity,
-#sectionWrapper input:not([type="submit"]){
+#tabs input:not([type="submit"]){
     width: 94%;
     margin-top: 4px;
     padding: 10px 5px 10px 32px;    
@@ -71,15 +71,15 @@ input {
 }
 
 #signUpStoreCity,
-#sectionWrapper input:not([type="submit"]):active,
-#sectionWrapper input:not([type="submit"]):focus{
+#tabs input:not([type="submit"]):active,
+#tabs input:not([type="submit"]):focus{
     border: 1px solid rgba(91, 90, 90, 0.7);
     background: rgba(238, 236, 240, 0.2);   
     box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.9) inset;
 }
 
 /*styling both submit buttons */
-#sectionWrapper p.button input{
+#tabs p.button input{
     width: 30%;
     cursor: pointer;    
     background: rgb(61, 157, 179);
@@ -98,11 +98,11 @@ input {
     transition: all 0.2s linear;
 }
 
-#sectionWrapper p.button input:hover{
+#tabs p.button input:hover{
     background: rgb(74, 179, 198);
 }
-#sectionWrapper p.button input:active,
-#sectionWrapper p.button input:focus{
+#tabs p.button input:active,
+#tabs p.button input:focus{
     background: rgb(40, 137, 154);
     position: relative;
     top: 1px;
@@ -123,7 +123,7 @@ p.change_link{
     text-align: right;
 }
 
-#sectionWrapper p.change_link a {
+#tabs p.change_link a {
     display: inline-block;
     font-weight: bold;
     background: rgb(247, 248, 241);
@@ -136,18 +136,18 @@ p.change_link{
     transition: all 0.4s  linear;
 }
 
-#sectionWrapper p.change_link a:hover {
+#tabs p.change_link a:hover {
     color: rgb(57, 191, 215);
     background: rgb(247, 247, 247);
     border: 1px solid rgb(74, 179, 198);
 }
 
-#sectionWrapper p.change_link a:active {
+#tabs p.change_link a:active {
     position: relative;
     top: 1px;
 }
 
-#sectionWrapper div.fielderror {
+#tabs div.fielderror {
     position:relative;
     margin-top:-15px;
  	margin-left:150px;
@@ -162,7 +162,7 @@ p.change_link{
  	font-weight:bold;
 }
 
-#sectionWrapper div.error {
+#tabs div.error {
     position:relative;
     margin-top:-15px;
  	border:2px solid #C0C097;
