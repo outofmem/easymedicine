@@ -2,12 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8"/>
+<script type="text/javascript" src="./resources/js/orderMedicineHome.js"></script>
 </head>
 <body>
 	<div id="tabs-1">
 		<div id="orderMedicineSectionWrapper">
 			<input type="hidden" id="activeSection" th:value="${activeSection}"/>
-			<!-- Preface Section -->
+			<!-- <Preface Section> -->
 			<div id="preface" class="preface">
 				<form action="#" id="prefaceForm">
 					<fieldset>
@@ -15,10 +16,69 @@
 					</fieldset>
 					<p class="change_link">
 		                <label th:text="#{label.impressed}"></label>
-		                <a href="#orderNow" id="orderNowLink" rel="orderNow" th:text="#{label.link.order.now}" class="linkSection"></a>
+		                <a href="#orderNow" id="orderNowLink" rel="orderMedicine" th:text="#{label.link.order.now}" class="linkSection"></a>
 		            </p>
 				</form>
 			</div>
+			<!-- </Preface Section> -->
+			<!-- <Order Medicine Section> -->
+			<div id="orderMedicine" class="orderMedicine">
+				<form action="#" id="orderMedicineForm" autocomplete="on">
+					<fieldset>
+						<h1 th:text="#{label.place.order}"></h1>
+						<fieldset>
+							<legend th:text="#{label.personal.information}"></legend>
+							<p>
+								<input type="text" name="customerName" id="customerName" placeholder="Your Name" required="required"/>
+							</p>
+							<p>
+								<input type="email" name="customerEmailId" id="customerEmailId" placeholder="Your E-mail" required="required"/>
+							</p>
+							<p>
+								<input type="text" name="customerMobileNumber" id="customerMobileNumber" placeholder="Your 10 Digit Mobile Number" required="required" pattern="\d{10}"/>
+							</p>
+						</fieldset>
+						<fieldset>
+							<legend th:text="#{label.delivery.address}"></legend>
+							<p>
+								<input type="text" name="customerHouseAddress" id="customerHouseAddress" placeholder="Your House Or Flat Address" required="required"/>
+							</p>
+							<p>
+								<input type="text" name="customerHouseLocality" id="customerHouseLocality" placeholder="Locality" required="required"/>
+							</p>
+							<p>
+								<select name="customerHouseCity" id="customerHouseCity" required="required">
+									<option value="">Select City</option>
+									<option th:each="city : ${cities}" th:value="${city}" th:text="${city}"></option>
+								</select>
+							</p>
+							<p>
+								<input type="text" name="customerHousePin" id="customerHousePin" placeholder="6 Digit PIN" required="required" pattern="\d{6}"/>
+							</p>
+						</fieldset>
+						<fieldset>
+							<legend th:text="#{label.medicine.detail}"></legend>
+							<p>
+								<table id="medicineTable">
+									<thead>
+										<tr>
+									        <th th:text="#{header.medicine.name}"></th>
+									        <th th:text="#{header.medicine.power}"></th>
+									        <th th:text="#{header.medicine.quantity}"></th>
+									        <th></th>							    
+									    </tr>
+									</thead>
+								</table>
+								<input type="button" id="addMedicine" th:value="#{label.button.add}"/>
+							</p>
+						</fieldset>
+						<p class="placeOrder button">
+							<input type="submit" id="placeOrderButton" th:value="#{label.place.order}"/>
+						</p>
+					</fieldset>
+				</form>
+			</div>
+			<!-- </Order Medicine Section> -->
 		</div>
 	</div>
 </body>

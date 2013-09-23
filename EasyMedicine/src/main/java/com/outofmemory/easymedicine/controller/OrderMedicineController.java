@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.outofmemory.easymedicine.model.OperatedCities;
+
 /**
  * Handle requests coming from order medicine page
  * 
@@ -33,6 +35,7 @@ public class OrderMedicineController {
 	public String home(Model model) {
 		LOGGER.info("Forwarding to order medicine page.");
 		model.addAttribute("activeSection", "preface");
+		model.addAttribute("cities", OperatedCities.values());
 		return "orderMedicineHome";
 	}
 }

@@ -37,6 +37,41 @@ $(function(){
 	   	e.preventDefault();
 	});
 	
+	//enable the medicine data table
+	var medicineTable = $("#medicineTable").dataTable({
+		"sDom" : '<"H"rt'
+	});
+	
+	//attach event handler with add medicine button
+	$("#addMedicine").click(function(e){
+		//add a new row to the data table where user can enter medicine detail
+		var rowIndex = medicineTable.fnAddData(["","","",""])[0];
+		var rows = $("#medicineTable tr:gt(0)");
+		rows.each(function(index) {
+			if(index == rowIndex) {
+				$(this).find("td").each(function(index){
+					if(index < 2) {
+						$(this).css("width", "30%");
+						this.innerHTML = '<input type="text" value="" required="required">';
+					} else if(index == 2) {
+						$(this).css("width", "30%");
+						this.innerHTML = '<input type="number" value="" min="1" required="required">';
+					} else {
+						$(this).css("text-align", "center");
+						this.innerHTML = '<a class="delete" href="#">Delete</a>';
+					}
+				});
+			}
+		});
+	});
+	
+	$("#medicineTable").delegate("a.delete", "click", function( e ) {
+        e.preventDefault();
+        //finding the grandparent of the link which is a row which needs to be removed
+        var tr = $(this).parent().parent()[0];
+        medicineTable.fnDeleteRow(tr);
+    });
+	
 	
 	//--------------------------------------------------------------------------------------------
 	//The below section is for reusable functions. Please add all these type of functions below.
@@ -44,7 +79,7 @@ $(function(){
 	
 	/**
 	 * This function is getting reused to toggle between sections
-	 * @param target The name of the targetted div
+	 * @param target The name of the targeted div
 	 */
 	function toggleSection(target) {
 		activeSection.fadeOut(400,function(){
