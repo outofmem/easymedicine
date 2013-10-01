@@ -41,7 +41,10 @@
 						<fieldset>
 							<legend th:text="#{label.delivery.address}"></legend>
 							<p>
-								<input type="text" name="customerHouseAddress" id="customerHouseAddress" placeholder="Your House Or Flat Address" required="required"/>
+								<input type="text" name="customerHouseNumber" id="customerHouseNumber" placeholder="House Or Flat Number" required="required"/>
+							</p>
+							<p>
+								<input type="text" name="customerHouseStreetAddress" id="customerHouseStreetAddress" placeholder="Street Address" required="required"/>
 							</p>
 							<p>
 								<input type="text" name="customerHouseLocality" id="customerHouseLocality" placeholder="Locality" required="required"/>
@@ -70,6 +73,9 @@
 									</thead>
 								</table>
 								<input type="button" id="addMedicine" th:value="#{label.button.add}"/>
+							</p>
+							<p>
+								<input type="text" name="prescribedBy" id="prescribedBy" placeholder="Name of the doctor who prescribed these medicines" required="required"/>
 							</p>
 						</fieldset>
 						<p class="placeOrder button">

@@ -31,6 +31,16 @@ $(function() {
 	//attach the click handler with the section switch links
 	linkSections.bind('click',function(e){
 		var link   = $(this);
+		//Need to capture the parent form because I need to reset the 
+		//current form back to normal before toggling to new form
+		var currentForm = link.parent().parent();
+		//first hide all the error divs of the current form
+		currentForm.find('div').each(function(i){
+			$(this).css("display","none");
+		});
+		//then reset the current form
+		currentForm[0].reset();
+		//now do the toggling
 	    var target  = link.attr('rel');
 	    toggleSection(target);
 	   	e.preventDefault();
@@ -292,9 +302,22 @@ $(function() {
 	 * This function fires AJAX request to logout from the system
 	 */
 	function logout() {
+		var param = "emailId="+$("#emailId").val();
 		$.ajax({ url: "./distributor/logout",
+			data: param,
             type: "POST",
             success: function(){
+            	//distributor is logged out, so I need to reset all the distributor
+            	//logged in sections(forms, divs)
+            	$("#loggedInDistributor").find("form").each(function(i){
+            		var form = $(this);
+            		form.find('div').each(function(i){
+            			$(this).css("display","none");
+            		});
+            		form[0].reset();
+            	});
+            	$( "#distributorTabs" ).tabs( "option", "active", 0 );
+            	//now toggle it back to login section
             	toggleSection("login");
             }
 		});

@@ -3,7 +3,6 @@
  */
 package com.outofmemory.easymedicine.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
@@ -99,19 +98,19 @@ public class DistributorHomeController {
 	}
 
 	/**
-	 * Check whether given store is already registered or not
+	 * Check whether the given store is already registered or not
 	 * 
-	 * @param request
-	 *            The HttpServletRequest
+	 * @param storePin
+	 * @param storeCity
+	 * @param storeLocality
+	 * @param storeName
 	 * @return true if provided store is already registered, false otherwise
 	 */
 	@RequestMapping(value = "/isStoreAlreadyRegistered", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody
-	boolean isStoreAlreadyRegistered(HttpServletRequest request) {
-		String storePin = request.getParameter("storePin");
-		String storeCity = request.getParameter("storeCity");
-		String storeLocality = request.getParameter("storeLocality");
-		String storeName = request.getParameter("storeName");
+	boolean isStoreAlreadyRegistered(@RequestParam String storePin,
+			@RequestParam String storeCity, @RequestParam String storeLocality,
+			@RequestParam String storeName) {
 
 		if (StringUtils.isEmpty(storeName)
 				|| StringUtils.isEmpty(storeLocality)
@@ -124,19 +123,22 @@ public class DistributorHomeController {
 	}
 
 	/**
-	 * Register a distributor to the system
+	 * Register a distributor to the system.
 	 * 
-	 * @param request
+	 * @param form
+	 *            An instance of {@link DistributorRegistrationForm}
+	 * @param session
+	 *            An instance of {@link HttpSession}
+	 * 
 	 * @return The JSON response
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody
-	String register(HttpServletRequest request) {
+	String register(DistributorRegistrationForm form, HttpSession session) {
 		JSONObject response = new JSONObject();
-		DistributorRegistrationForm form = getDistributorRegistrationFormFromRequest(request);
 
 		if (distributorService.addDistributor(form)) {
-			request.getSession().setAttribute("sessionId",
+			session.setAttribute("sessionId",
 					RandomStringUtils.randomAlphanumeric(15));
 			response.put("code", HttpStatus.SC_CREATED);
 			response.put("id", form.getEmailAddress());
@@ -146,24 +148,26 @@ public class DistributorHomeController {
 	}
 
 	/**
-	 * login to the system
+	 * Logged the distributor in to the system
 	 * 
-	 * @param request
+	 * @param loginEmailId
+	 * @param loginPassword
+	 * @param session
 	 * @return The JSON response
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody
-	String login(HttpServletRequest request) {
-		String emailId = request.getParameter("loginEmailId");
-		String password = request.getParameter("loginPassword");
+	String login(@RequestParam String loginEmailId,
+			@RequestParam String loginPassword, HttpSession session) {
 
 		JSONObject response = new JSONObject();
 
-		if (distributorService.authenticateDistributor(emailId, password)) {
-			request.getSession().setAttribute("sessionId",
+		if (distributorService.authenticateDistributor(loginEmailId,
+				loginPassword)) {
+			session.setAttribute("sessionId",
 					RandomStringUtils.randomAlphanumeric(15));
 			response.put("code", HttpStatus.SC_OK);
-			response.put("id", emailId);
+			response.put("id", loginEmailId);
 		} else {
 			response.put("code", HttpStatus.SC_UNAUTHORIZED);
 		}
@@ -174,13 +178,12 @@ public class DistributorHomeController {
 	/**
 	 * Reset the password for requested distributor
 	 * 
-	 * @param request
-	 * @return The JSON response
+	 * @param emailId
+	 * @return JSON response
 	 */
 	@RequestMapping(value = "/resetPassword", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody
-	String resetPassword(HttpServletRequest request) {
-		String emailId = request.getParameter("forgotPwdEmailId");
+	String resetPassword(@RequestParam String emailId) {
 		JSONObject response = new JSONObject();
 		if (distributorService.isEmailAlreadyRegistered(emailId)) {
 			distributorService.resetDistributorPassword(emailId);
@@ -194,20 +197,25 @@ public class DistributorHomeController {
 	/**
 	 * Change the password for requested distributor
 	 * 
-	 * @param request
-	 * @return The JSON response
+	 * @param emailId
+	 *            The e-mail id of the requested distributor
+	 * @param oldPassword
+	 *            The old password
+	 * @param newPassword
+	 *            The new password
+	 * @return A JSON response
 	 */
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody
-	String changePassword(HttpServletRequest request) {
-		String emailId = request.getParameter("emailId");
-		String oldPassword = request.getParameter("changePwdOldPassword");
-		String newPassword = request.getParameter("changePwdNewPassword");
-		
+	String changePassword(@RequestParam String emailId,
+			@RequestParam String oldPassword, @RequestParam String newPassword) {
+
 		JSONObject response = new JSONObject();
 		if (distributorService.authenticateDistributor(emailId, oldPassword)) {
 			distributorService.changeDistributorPassword(emailId, newPassword);
 			response.put("code", HttpStatus.SC_OK);
+			LOGGER.debug("The password for " + emailId
+					+ " is changed successfully.");
 		} else {
 			response.put("code", HttpStatus.SC_UNAUTHORIZED);
 		}
@@ -215,39 +223,19 @@ public class DistributorHomeController {
 	}
 
 	/**
-	 * Logged out the distributor from the application
+	 * Logged out the distributor from the system
 	 * 
+	 * @param emailId
+	 *            The e-mail id of the distributor
 	 * @param session
-	 *            The HTTP session
+	 *            An instance of {@link HttpSession}
 	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	public @ResponseBody
-	void logout(HttpSession session) {
+	void logout(@RequestParam String emailId, HttpSession session) {
 		session.removeAttribute("sessionId");
 		session.invalidate();
-		LOGGER.info("Distributor is logged out");
-	}
-
-	/**
-	 * Generate distributor registration form from Http request
-	 * 
-	 * @param request
-	 *            The {@link HttpServletRequest}
-	 * @return An instance of {@link DistributorRegistrationForm}
-	 */
-	private DistributorRegistrationForm getDistributorRegistrationFormFromRequest(
-			HttpServletRequest request) {
-		DistributorRegistrationForm form = new DistributorRegistrationForm();
-		form.setEmailAddress(request.getParameter("signUpEmailId"));
-		form.setPassword(request.getParameter("signUpPassword"));
-		form.setMobileNumber(request.getParameter("signUpMobileNumber"));
-		form.setMedicineStoreName(request.getParameter("signUpStoreName"));
-		form.setMedicineStoreAddress(request.getParameter("signUpStoreAddress"));
-		form.setMedicineStoreLocality(request
-				.getParameter("signUpStoreLocality"));
-		form.setMedicineStoreCity(request.getParameter("signUpStoreCity"));
-		form.setMedicineStorePin(request.getParameter("signUpStorePin"));
-		return form;
+		LOGGER.debug(emailId + " is logged out.");
 	}
 
 }

@@ -64,7 +64,7 @@
 							<div id="forgotPwdErrDiv" class="error" style="display: none;" th:text="#{error.message.reset.password.failed}"></div>
 						</p>
 						<p>
-							<input type="email" name="forgotPwdEmailId" id="forgotPwdEmailId" placeholder="Your E-mail" required="required"/>
+							<input type="email" name="emailId" id="forgotPwdEmailId" placeholder="Your E-mail" required="required"/>
 						</p>
 						<p class="resetPassword button">
 							<input type="submit" id="resetPasswordButton" th:value="#{label.reset.password}"/>
@@ -84,41 +84,41 @@
 					<fieldset>
 						<h1 th:text="#{label.header.signup}"></h1>
 						<p>
-							<input type="email" name="signUpEmailId" id="signUpEmailId" placeholder="Your E-mail" required="required"/>
+							<input type="email" name="emailAddress" id="signUpEmailId" placeholder="Your E-mail" required="required"/>
 							<div id="signUpEmailIdErrDiv" class="fielderror" style="display: none;" th:text="#{error.message.signup.email}"></div>
 						</p>
 						<p>
-							<input type="password" name="signUpPassword" id="signUpPassword" placeholder="Your Password" required="required"/>
+							<input type="password" name="password" id="signUpPassword" placeholder="Your Password" required="required"/>
 							<div id="signUpPasswordErrDiv" class="fielderror" style="display: none;" th:text="#{error.message.password}"></div>
 						</p>
 						<p>
-							<input type="password" name="signUpConfirmPassword" id="signUpConfirmPassword" placeholder="Confirm Your Password" required="required"/>
+							<input type="password" name="confirmPassword" id="signUpConfirmPassword" placeholder="Confirm Your Password" required="required"/>
 							<div id="signUpConfirmPasswordErrDiv" class="fielderror" style="display: none;" th:text="#{error.message.confirm.password}"></div>
 						</p>
 						<p>
-							<input type="text" name="signUpMobileNumber" id="signUpMobileNumber" placeholder="Your 10 Digit Mobile Number" required="required" pattern="\d{10}"/>
+							<input type="text" name="mobileNumber" id="signUpMobileNumber" placeholder="Your 10 Digit Mobile Number" required="required" pattern="\d{10}"/>
 							<div id="signUpMobileNumberErrDiv" class="fielderror" style="display: none;" th:text="#{error.message.signup.mobile}"></div>
 						</p>
 						<fieldset>
 							<legend th:text="#{label.medicine.store.details}"></legend>
 							<p>
-								<input type="text" name="signUpStoreName" id="signUpStoreName" placeholder="Name" required="required"/>
+								<input type="text" name="medicineStoreName" id="signUpStoreName" placeholder="Name" required="required"/>
 								<div id="signUpStoreNameErrDiv" class="fielderror" style="display: none;" th:text="#{error.message.signup.store}"></div>
 							</p>
 							<p>
-								<input type="text" name="signUpStoreAddress" id="signUpStoreAddress" placeholder="Address" required="required"/>
+								<input type="text" name="medicineStoreAddress" id="signUpStoreAddress" placeholder="Address" required="required"/>
 							</p>
 							<p>
-								<input type="text" name="signUpStoreLocality" id="signUpStoreLocality" placeholder="Locality" required="required"/>
+								<input type="text" name="medicineStoreLocality" id="signUpStoreLocality" placeholder="Locality" required="required"/>
 							</p>
 							<p>
-								<select name="signUpStoreCity" id="signUpStoreCity" required="required">
+								<select name="medicineStoreCity" id="signUpStoreCity" required="required">
 									<option value="">Select City</option>
 									<option th:each="city : ${cities}" th:value="${city}" th:text="${city}"></option>
 								</select>
 							</p>
 							<p>
-								<input type="text" name="signUpStorePin" id="signUpStorePin" placeholder="6 Digit PIN" required="required" pattern="\d{6}"/>
+								<input type="text" name="medicineStorePin" id="signUpStorePin" placeholder="6 Digit PIN" required="required" pattern="\d{6}"/>
 							</p>
 						</fieldset>
 						<p class="signup button">
@@ -152,14 +152,14 @@
 									<div id="changePwdErrDiv" class="error" style="display: none;" th:text="#{error.message.change.password.failed}"></div>
 								</p>
 								<p>
-									<input type="password" name="changePwdOldPassword" id="changePwdOldPassword" placeholder="Old Password" required="required"/>
+									<input type="password" name="oldPassword" id="changePwdOldPassword" placeholder="Old Password" required="required"/>
 								</p>
 								<p>
-									<input type="password" name="changePwdNewPassword" id="changePwdNewPassword" placeholder="New Password" required="required"/>
+									<input type="password" name="newPassword" id="changePwdNewPassword" placeholder="New Password" required="required"/>
 									<div id="changePwdNewPasswordErrDiv" class="fielderror" style="display: none;" th:text="#{error.message.password}"></div>
 								</p>
 								<p>
-									<input type="password" name="changePwdConfirmNewPassword" id="changePwdConfirmNewPassword" placeholder="Confirm New Password" required="required"/>
+									<input type="password" name="confirmNewPassword" id="changePwdConfirmNewPassword" placeholder="Confirm New Password" required="required"/>
 									<div id="changePwdConfirmNewPasswordErrDiv" class="fielderror" style="display: none;" th:text="#{error.message.confirm.password}"></div>
 								</p>
 								<p class="changePassword button">

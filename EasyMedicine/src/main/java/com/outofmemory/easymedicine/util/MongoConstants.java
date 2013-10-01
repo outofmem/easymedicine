@@ -19,8 +19,9 @@ public final class MongoConstants {
 	public static final String EASY_MEDICINE_DB = "easyMedicine";
 
 	public static final String DISTRIBUTOR_COLLECTION = "distributors";
+	public static final String CUSTOMER_COLLECTION = "customers";
 
-	// The keys for distributors collection
+	// The keys for the collections
 	public static final String KEY_ID = "_id";
 	public static final String KEY_PASSWORD = "password";
 	public static final String KEY_MOBILE = "mobile";
@@ -30,6 +31,8 @@ public final class MongoConstants {
 	public static final String KEY_LOCALITY = "locality";
 	public static final String KEY_CITY = "city";
 	public static final String KEY_PIN = "pin";
+	public static final String KEY_HOUSE_OR_FLAT_NUMBER = "houseOrFlatNumber";
+	public static final String STREET_ADDRESS = "streetAddress";
 
 	// Mongo DB operators
 	public static final String OPERATOR_SET = "$set";

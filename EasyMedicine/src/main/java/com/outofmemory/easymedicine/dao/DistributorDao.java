@@ -16,8 +16,7 @@ import com.outofmemory.easymedicine.model.MedicineStore;
 import com.outofmemory.easymedicine.util.MongoConstants;
 
 /**
- * The data access logic of all the distributor related operations like login,
- * registration, get order notification are written in this class.
+ * The data access logic of distributors collection
  * 
  * @author pribiswas
  * 
