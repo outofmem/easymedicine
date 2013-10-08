@@ -32,7 +32,7 @@ public final class MongoConstants {
 	public static final String KEY_CITY = "city";
 	public static final String KEY_PIN = "pin";
 	public static final String KEY_HOUSE_OR_FLAT_NUMBER = "houseOrFlatNumber";
-	public static final String STREET_ADDRESS = "streetAddress";
+	public static final String KEY_STREET_ADDRESS = "streetAddress";
 
 	// Mongo DB operators
 	public static final String OPERATOR_SET = "$set";

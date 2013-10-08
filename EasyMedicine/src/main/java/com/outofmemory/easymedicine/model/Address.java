@@ -11,24 +11,40 @@ package com.outofmemory.easymedicine.model;
  */
 public class Address {
 
-	private String houseOrFlatAddress;
+	private String houseOrFlatNumber;
+	private String streetAddress;
 	private String locality;
 	private String city;
 	private String pin;
 
 	/**
-	 * @return the houseOrFlatAddress
+	 * @return the houseOrFlatNumber
 	 */
-	public String getHouseOrFlatAddress() {
-		return houseOrFlatAddress;
+	public String getHouseOrFlatNumber() {
+		return houseOrFlatNumber;
 	}
 
 	/**
-	 * @param houseOrFlatAddress
-	 *            the houseOrFlatAddress to set
+	 * @param houseOrFlatNumber
+	 *            the houseOrFlatNumber to set
 	 */
-	public void setHouseOrFlatAddress(String houseOrFlatAddress) {
-		this.houseOrFlatAddress = houseOrFlatAddress;
+	public void setHouseOrFlatNumber(String houseOrFlatNumber) {
+		this.houseOrFlatNumber = houseOrFlatNumber;
+	}
+
+	/**
+	 * @return the streetAddress
+	 */
+	public String getStreetAddress() {
+		return streetAddress;
+	}
+
+	/**
+	 * @param streetAddress
+	 *            the streetAddress to set
+	 */
+	public void setStreetAddress(String streetAddress) {
+		this.streetAddress = streetAddress;
 	}
 
 	/**
@@ -78,9 +94,9 @@ public class Address {
 
 	@Override
 	public String toString() {
-		return new StringBuilder(houseOrFlatAddress).append(",")
-				.append(locality).append(",").append(city).append("-")
-				.append(pin).toString();
+		return new StringBuilder(houseOrFlatNumber).append(",")
+				.append(streetAddress).append(",").append(locality).append(",")
+				.append(city).append("-").append(pin).toString();
 	}
 
 }

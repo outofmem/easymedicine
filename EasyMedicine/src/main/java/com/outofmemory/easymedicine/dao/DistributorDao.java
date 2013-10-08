@@ -16,7 +16,7 @@ import com.outofmemory.easymedicine.model.MedicineStore;
 import com.outofmemory.easymedicine.util.MongoConstants;
 
 /**
- * The data access logic of distributors collection
+ * The data access logic of distributor collection
  * 
  * @author pribiswas
  * 
