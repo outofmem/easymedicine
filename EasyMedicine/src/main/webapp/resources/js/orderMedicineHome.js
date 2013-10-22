@@ -41,28 +41,11 @@ $(function(){
 	var medicineTable = $("#medicineTable").dataTable({
 		"sDom" : '<"H"rt'
 	});
-	
+	//add the first mandatory row
+	addMedicineRow(false);
 	//attach event handler with add medicine button
 	$("#addMedicine").click(function(e){
-		//add a new row to the data table where user can enter medicine detail
-		var rowIndex = medicineTable.fnAddData(["","","",""])[0];
-		var rows = $("#medicineTable tr:gt(0)");
-		rows.each(function(index) {
-			if(index == rowIndex) {
-				$(this).find("td").each(function(index){
-					if(index < 2) {
-						$(this).css("width", "30%");
-						this.innerHTML = '<input type="text" value="" required="required">';
-					} else if(index == 2) {
-						$(this).css("width", "30%");
-						this.innerHTML = '<input type="number" value="" min="1" required="required">';
-					} else {
-						$(this).css("text-align", "center");
-						this.innerHTML = '<a class="delete" href="#">Delete</a>';
-					}
-				});
-			}
-		});
+		addMedicineRow(true);
 	});
 	
 	$("#medicineTable").delegate("a.delete", "click", function( e ) {
@@ -72,6 +55,52 @@ $(function(){
         medicineTable.fnDeleteRow(tr);
     });
 	
+	//attach submit event handler for order medicine form
+	$("#orderMedicineForm").submit(function(e){
+		e.preventDefault();
+		openProgressBar();
+		var form = $(this);
+		var params = handleMultiValuedParams(form.serialize());
+		$.ajax({ url: "./orderMedicine/order",
+            data: params,
+            type: "POST",
+            success: function(response){
+               	if(response.code == '200') {
+               		//reset the form for successful operation
+               		form[0].reset();
+               		medicineTable.$("tr").each(function(index){
+               			if(index > 0) {
+               				medicineTable.fnDeleteRow(this);
+               			}
+               		});
+               	}
+               	closeProgressBar();
+               	$("#orderStatusMessage").text(response.message);
+           		$("#orderStatusForm").dialog("open");
+            }
+		});
+	});
+	
+	//initializing the progress information dialog
+	$('#orderProgressForm').dialog({
+		autoOpen: false,
+		closeOnEscape: false,
+		width: 500,
+		modal: true
+	});
+	//initializing the order status dialog
+	$( "#orderStatusForm" ).dialog({
+		autoOpen: false,
+		width: 500,
+		height: 300,
+		modal: true,
+		buttons: {
+		  "Ok": function() {
+			  $("#orderStatusMessage").text("");
+		      $( this ).dialog( "close" );
+		  }
+		}
+	});
 	
 	//--------------------------------------------------------------------------------------------
 	//The below section is for reusable functions. Please add all these type of functions below.
@@ -98,5 +127,83 @@ $(function(){
 	                        activeSection.fadeIn(400);
 	                     });
 	    });
+	}
+	
+	/**
+	 * Add a new row to the data table where user can enter medicine detail.
+	 * @param deletable The boolean flag to indicate whether delete link should be present beside created row or not
+	 */
+	function addMedicineRow(deletable) {
+		var rowIndex = medicineTable.fnAddData(["","","",""])[0];
+		medicineTable.$("tr").each(function(index) {
+			if(index == rowIndex) {
+				$(this).find("td").each(function(index){
+					if(index < 2) {
+						$(this).css("width", "30%");
+						if(index == 0) {
+							this.innerHTML = '<input type="text" name="medicineName" required="required">';
+						} else {
+							this.innerHTML = '<input type="text" name="medicinePower" required="required">';
+						}
+					} else if(index == 2) {
+						$(this).css("width", "30%");
+						this.innerHTML = '<input type="number" name="medicineQuantity" min="1" required="required">';
+					} else {
+						$(this).css("text-align", "center");
+						if(deletable) {
+							this.innerHTML = '<a class="delete" href="#">Delete</a>';
+						}
+					}
+				});
+			}
+		});
+	}
+	
+	/**
+	 * This javscript function handles the multi valued parameter 
+	 * and make its value to comma separated string.
+	 * 
+	 * @param params The http parameters
+	 */
+	function handleMultiValuedParams(params) {
+		var newParams = undefined;
+		var parameterMap = {};
+		var paramArray = params.split("&");
+		$.each(paramArray, function(key, param) {
+		    var parts = param.split("=");
+		    if(!parameterMap[parts[0]]) {
+		    	//key not present, add it
+		    	parameterMap[parts[0]] = parts[1];
+		    } else {
+		    	//add the next value against same key
+		    	parameterMap[parts[0]] = parameterMap[parts[0]] + "," + parts[1];
+		    }
+		});
+		for(key in parameterMap) {
+			if(newParams == undefined) {
+				newParams=key+"="+parameterMap[key];
+			} else {
+				newParams=newParams+"&"+key+"="+parameterMap[key];
+			}				
+		}
+		return newParams;
+	}
+	
+	/**
+	 * Open the progress bar dialog
+	 */
+	function openProgressBar() {
+		$( "#progressBar" ).progressbar({
+		      value: false
+		});
+		$( "#orderProgressForm" ).dialog( "open" );
+	}
+	
+	/**
+	 * Close the progress bar dialog
+	 */
+	function closeProgressBar() {
+		$( "#progressBar" ).progressbar( "destroy" );
+		$( "#orderProgressForm" ).dialog( "close" );
 	}
 });

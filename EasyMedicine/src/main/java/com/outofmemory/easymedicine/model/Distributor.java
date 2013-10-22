@@ -76,6 +76,9 @@ public class Distributor {
 		this.medicineStore = medicineStore;
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return medicineStore.toString();

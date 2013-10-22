@@ -7,7 +7,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Collection;
 import java.util.Locale;
 import java.util.Random;
 
@@ -23,18 +22,16 @@ import com.outofmemory.easymedicine.dao.DistributorDao;
 import com.outofmemory.easymedicine.form.DistributorRegistrationForm;
 import com.outofmemory.easymedicine.model.Distributor;
 import com.outofmemory.easymedicine.model.MedicineStore;
-import com.outofmemory.easymedicine.notification.Notification;
-import com.outofmemory.easymedicine.notification.NotificationListener;
 
 /**
- * The business logic of all the distributor related operations like login,
- * registration, get order notification are written in this class.
+ * The business logic of all the distributor related operations are written in
+ * this class.
  * 
  * @author pribiswas
  * 
  */
 @Service
-public class DistributorService {
+public class DistributorService extends NotificationService {
 
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(DistributorService.class);
@@ -42,8 +39,6 @@ public class DistributorService {
 	@Autowired
 	private DistributorDao distributorDao;
 	private final Random random = new SecureRandom();
-	@Autowired
-	private Collection<NotificationListener> notificationListeners;
 	@Autowired
 	private MessageSource messageSource;
 
@@ -60,15 +55,13 @@ public class DistributorService {
 		LOGGER.info("Following distributor is registered succesfully : "
 				+ distributor);
 		// we need to send a registration notification
-		Notification regitrationNotification = new Notification(
-				distributor.getEmailAddress(), distributor.getMobileNumber(),
-				messageSource.getMessage(
+		sendNotification(distributor.getEmailAddress(),
+				distributor.getMobileNumber(), messageSource.getMessage(
 						"distributor.registration.notification.subject",
 						new Object[0], Locale.ENGLISH),
 				messageSource.getMessage(
 						"distributor.registration.notification.message",
 						new Object[0], Locale.ENGLISH));
-		sendNotification(regitrationNotification);
 		return true;
 	}
 
@@ -151,7 +144,7 @@ public class DistributorService {
 			if (passwordUpdated) {
 				LOGGER.debug("Password is reset for " + emailId);
 				// Send reset password notification
-				Notification passwordResetNotification = new Notification(
+				sendNotification(
 						distributor.getEmailAddress(),
 						distributor.getMobileNumber(),
 						messageSource
@@ -163,7 +156,6 @@ public class DistributorService {
 										"distributor.password.reset.notification.message",
 										new Object[] { newPassword },
 										Locale.ENGLISH));
-				sendNotification(passwordResetNotification);
 			}
 		}
 	}
@@ -186,7 +178,7 @@ public class DistributorService {
 			if (passwordUpdated) {
 				LOGGER.debug("Password is changed for " + emailId);
 				// Send the password change notification
-				Notification passwordChangeNotification = new Notification(
+				sendNotification(
 						distributor.getEmailAddress(),
 						distributor.getMobileNumber(),
 						messageSource
@@ -197,7 +189,6 @@ public class DistributorService {
 								.getMessage(
 										"distributor.password.change.notification.message",
 										new Object[0], Locale.ENGLISH));
-				sendNotification(passwordChangeNotification);
 			}
 		}
 	}
@@ -254,17 +245,6 @@ public class DistributorService {
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(
 					"UTF-8 encoding is not available to encode the password.");
-		}
-	}
-
-	/**
-	 * Send the given notification to listeners
-	 * 
-	 * @param notification
-	 */
-	private void sendNotification(Notification notification) {
-		for (NotificationListener listener : notificationListeners) {
-			listener.notify(notification);
 		}
 	}
 }

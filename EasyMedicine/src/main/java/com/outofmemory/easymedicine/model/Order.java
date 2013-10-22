@@ -16,6 +16,7 @@ public class Order {
 	private String id;
 	private String customerId;
 	private List<Medicine> medicines;
+	private String patient;
 	private String doctor;
 
 	/**
@@ -69,6 +70,21 @@ public class Order {
 	}
 
 	/**
+	 * @return the patient
+	 */
+	public String getPatient() {
+		return patient;
+	}
+
+	/**
+	 * @param patient
+	 *            the patient to set
+	 */
+	public void setPatient(String patient) {
+		this.patient = patient;
+	}
+
+	/**
 	 * @return the doctor
 	 */
 	public String getDoctor() {
@@ -83,10 +99,14 @@ public class Order {
 		this.doctor = doctor;
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return new StringBuilder("id:").append(id).append(",customerId:")
-				.append(customerId).append(",medicines:").append(medicines)
-				.append(",doctor").append(doctor).toString();
+		return "Order [id=" + id + ", customerId=" + customerId
+				+ ", medicines=" + medicines + ", patient=" + patient
+				+ ", doctor=" + doctor + "]";
 	}
+
 }

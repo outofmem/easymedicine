@@ -31,7 +31,7 @@ public class TrackOrderController {
 	 */
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Model model) {
-		LOGGER.info("Forwarding to track order page.");
+		LOGGER.debug("Forwarding to track order page.");
 		return "trackOrderHome";
 	}
 }

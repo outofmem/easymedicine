@@ -16,10 +16,14 @@ public final class MongoConstants {
 		// way
 	}
 
+	// Database
 	public static final String EASY_MEDICINE_DB = "easyMedicine";
 
+	// Collections
 	public static final String DISTRIBUTOR_COLLECTION = "distributors";
 	public static final String CUSTOMER_COLLECTION = "customers";
+	public static final String ORDER_COLLECTION = "orders";
+	public static final String TRANSACTION_COLLECTION = "transactions";
 
 	// The keys for the collections
 	public static final String KEY_ID = "_id";
@@ -33,6 +37,14 @@ public final class MongoConstants {
 	public static final String KEY_PIN = "pin";
 	public static final String KEY_HOUSE_OR_FLAT_NUMBER = "houseOrFlatNumber";
 	public static final String KEY_STREET_ADDRESS = "streetAddress";
+	public static final String KEY_CUSTOMER_ID = "customerId";
+	public static final String KEY_DOCTOR = "doctor";
+	public static final String KEY_PATIENT = "patient";
+	public static final String KEY_POWER = "power";
+	public static final String KEY_QUANTITY = "quantity";
+	public static final String KEY_MEDICINES = "medicines";
+	public static final String KEY_ORDER_ID = "orderId";
+	public static final String KEY_DISTRIBUTOR_ID = "distributorId";
 
 	// Mongo DB operators
 	public static final String OPERATOR_SET = "$set";

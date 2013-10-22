@@ -20,9 +20,13 @@ public class Notification {
 	 * Construct an instance of {@link Notification}
 	 * 
 	 * @param emailAddress
+	 *            The e-mail address of the receiver
 	 * @param mobileNumber
+	 *            The mobile number of the receiver
 	 * @param subject
+	 *            The subject line of the message
 	 * @param message
+	 *            The message
 	 */
 	public Notification(String emailAddress, String mobileNumber,
 			String subject, String message) {

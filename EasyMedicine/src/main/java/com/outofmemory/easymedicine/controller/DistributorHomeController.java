@@ -53,11 +53,11 @@ public class DistributorHomeController {
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Model model, HttpSession session) {
 		if (session.getAttribute("sessionId") == null) {
-			LOGGER.info("Forwarding to home page.");
+			LOGGER.debug("Forwarding to home page.");
 			// Preface prompt will be opened when there is no active session
 			model.addAttribute("activeSection", "preface");
 		} else {
-			LOGGER.info("Forwarding to distributor home page.");
+			LOGGER.debug("Forwarding to distributor home page.");
 			model.addAttribute("activeSection", "loggedInDistributor");
 			model.addAttribute("sessionId", session.getAttribute("sessionId"));
 		}

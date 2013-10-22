@@ -92,11 +92,14 @@ public class Address {
 		this.pin = pin;
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return new StringBuilder(houseOrFlatNumber).append(",")
-				.append(streetAddress).append(",").append(locality).append(",")
-				.append(city).append("-").append(pin).toString();
+		return "Address [houseOrFlatNumber=" + houseOrFlatNumber
+				+ ", streetAddress=" + streetAddress + ", locality=" + locality
+				+ ", city=" + city + ", pin=" + pin + "]";
 	}
 
 }

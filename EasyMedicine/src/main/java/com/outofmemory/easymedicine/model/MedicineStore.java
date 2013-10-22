@@ -92,10 +92,14 @@ public class MedicineStore {
 		this.pin = pin;
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return new StringBuilder(name).append(",").append(locality).append(",")
-				.append(city).append("-").append(pin).toString();
+		return "MedicineStore [name=" + name + ", address=" + address
+				+ ", locality=" + locality + ", city=" + city + ", pin=" + pin
+				+ "]";
 	}
 
 }

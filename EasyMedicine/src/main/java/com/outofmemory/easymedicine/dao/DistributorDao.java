@@ -3,12 +3,16 @@
  */
 package com.outofmemory.easymedicine.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.QueryBuilder;
 import com.outofmemory.easymedicine.model.Distributor;
@@ -113,7 +117,7 @@ public class DistributorDao extends AbstractBaseDao {
 				MongoConstants.KEY_STORE).append(".")
 				.append(MongoConstants.KEY_PIN).toString(), store.getPin());
 
-		DBObject query = QueryBuilder.start().and(name, locality, city, pin)
+		DBObject query = QueryBuilder.start().and(name, pin, locality, city)
 				.get();
 		DBObject projection = new BasicDBObject(MongoConstants.KEY_ID, true);
 		return distributorCollection.findOne(query, projection) != null;
@@ -150,6 +154,76 @@ public class DistributorDao extends AbstractBaseDao {
 				emailId), new BasicDBObject(MongoConstants.OPERATOR_SET,
 				new BasicDBObject(MongoConstants.KEY_PASSWORD, newPassword)));
 		return true;
+	}
+
+	/**
+	 * Get all the distributors from a particular locality
+	 * 
+	 * @param locality
+	 *            The name of the locality
+	 * @param city
+	 *            The city of the locality
+	 * @return A list of distributor
+	 */
+	public List<Distributor> getDistributorsByLocality(String locality,
+			String city) {
+		List<Distributor> distributors = new ArrayList<Distributor>();
+		DBObject localityObj = new BasicDBObject(new StringBuilder(
+				MongoConstants.KEY_STORE).append(".")
+				.append(MongoConstants.KEY_LOCALITY).toString(), locality);
+		DBObject cityObj = new BasicDBObject(new StringBuilder(
+				MongoConstants.KEY_STORE).append(".")
+				.append(MongoConstants.KEY_CITY).toString(), city);
+
+		DBObject query = QueryBuilder.start().and(localityObj, cityObj).get();
+		// we only need e-mail and mobile
+		DBObject projection = new BasicDBObject(MongoConstants.KEY_MOBILE, true);
+		DBCursor distributorCursor = distributorCollection.find(query,
+				projection);
+		for (DBObject distributorObj : distributorCursor) {
+			Distributor distributor = new Distributor();
+			distributor.setEmailAddress(distributorObj.get(
+					MongoConstants.KEY_ID).toString());
+			distributor.setMobileNumber(distributorObj.get(
+					MongoConstants.KEY_MOBILE).toString());
+			distributors.add(distributor);
+		}
+		return distributors;
+	}
+
+	/**
+	 * Get all the distributors from a particular pin
+	 * 
+	 * 
+	 * @param pin
+	 *            The pin
+	 * @param city
+	 *            The city
+	 * @return A list of distributor
+	 */
+	public List<Distributor> getDistributorsByPin(String pin, String city) {
+		List<Distributor> distributors = new ArrayList<Distributor>();
+		DBObject cityObj = new BasicDBObject(new StringBuilder(
+				MongoConstants.KEY_STORE).append(".")
+				.append(MongoConstants.KEY_CITY).toString(), city);
+		DBObject pinObj = new BasicDBObject(new StringBuilder(
+				MongoConstants.KEY_STORE).append(".")
+				.append(MongoConstants.KEY_PIN).toString(), pin);
+
+		DBObject query = QueryBuilder.start().and(pinObj, cityObj).get();
+		// we only need e-mail and mobile
+		DBObject projection = new BasicDBObject(MongoConstants.KEY_MOBILE, true);
+		DBCursor distributorCursor = distributorCollection.find(query,
+				projection);
+		for (DBObject distributorObj : distributorCursor) {
+			Distributor distributor = new Distributor();
+			distributor.setEmailAddress(distributorObj.get(
+					MongoConstants.KEY_ID).toString());
+			distributor.setMobileNumber(distributorObj.get(
+					MongoConstants.KEY_MOBILE).toString());
+			distributors.add(distributor);
+		}
+		return distributors;
 	}
 
 	/**

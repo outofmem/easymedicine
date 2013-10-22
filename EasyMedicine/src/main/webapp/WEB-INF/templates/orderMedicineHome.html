@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8"/>
 <script type="text/javascript" src="./resources/js/orderMedicineHome.js"></script>
+<style type="text/css">
+	/*
+	 * Want to customize the dialog box at page label where
+	 * no title bar will be shown
+	 */
+	.ui-dialog-titlebar {
+	  visibility: hidden;
+	}
+</style>
 </head>
 <body>
 	<div id="tabs-1">
@@ -75,7 +84,10 @@
 								<input type="button" id="addMedicine" th:value="#{label.button.add}"/>
 							</p>
 							<p>
-								<input type="text" name="prescribedBy" id="prescribedBy" placeholder="Name of the doctor who prescribed these medicines" required="required"/>
+								<input type="text" name="patientName" id="patientName" placeholder="Name of the patient" required="required"/>
+							</p>
+							<p>
+								<input type="text" name="doctorName" id="doctorName" placeholder="Name of the doctor who prescribed these medicines" required="required"/>
 							</p>
 						</fieldset>
 						<p class="placeOrder button">
@@ -85,6 +97,21 @@
 				</form>
 			</div>
 			<!-- </Order Medicine Section> -->
+			<!-- <Progress Bar> -->
+			<div id="orderProgress">
+				<form action="#" id="orderProgressForm">
+					<p th:text="#{progress.message.order.medicine}" class="dialog"></p>
+					<div id="progressBar"></div>
+				</form>
+			</div>
+			<!-- </Progress Bar> -->
+			<!-- <Order Status> -->
+			<div id="orderStatus">
+				<form action="#" id="orderStatusForm">
+					<p id="orderStatusMessage" class="dialog"></p>
+				</form>
+			</div>
+			<!-- </Order Status> -->
 		</div>
 	</div>
 </body>

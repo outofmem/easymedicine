@@ -60,10 +60,13 @@ public class Medicine {
 		this.quantity = quantity;
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return new StringBuilder("name:").append(name).append(",power:")
-				.append(power).append(",quantity:").append(quantity).toString();
+		return "Medicine [name=" + name + ", power=" + power + ", quantity="
+				+ quantity + "]";
 	}
 
 }

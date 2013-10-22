@@ -76,11 +76,14 @@ public class Customer {
 		this.address = address;
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return new StringBuilder("name:").append(name).append(",emailId:")
-				.append(emailId).append(",mobile:").append(mobileNumber)
-				.append(",address:").append(address.toString()).toString();
+		return "Customer [name=" + name + ", emailId=" + emailId
+				+ ", mobileNumber=" + mobileNumber + ", address=" + address
+				+ "]";
 	}
 
 }
