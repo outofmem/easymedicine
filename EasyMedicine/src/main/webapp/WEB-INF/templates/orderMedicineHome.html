@@ -38,13 +38,13 @@
 						<fieldset>
 							<legend th:text="#{label.personal.information}"></legend>
 							<p>
-								<input type="text" name="customerName" id="customerName" placeholder="Your Name" required="required"/>
-							</p>
-							<p>
 								<input type="email" name="customerEmailId" id="customerEmailId" placeholder="Your E-mail" required="required"/>
 							</p>
 							<p>
 								<input type="text" name="customerMobileNumber" id="customerMobileNumber" placeholder="Your 10 Digit Mobile Number" required="required" pattern="\d{10}"/>
+							</p>
+							<p>
+								<input type="text" name="customerName" id="customerName" placeholder="Your Name" required="required"/>
 							</p>
 						</fieldset>
 						<fieldset>
@@ -97,6 +97,13 @@
 				</form>
 			</div>
 			<!-- </Order Medicine Section> -->
+			<!-- <Customer Information> -->
+			<div id="customerInfo">
+				<form action="#" id="customerInfoForm">
+					<p th:text="#{confirmation.message.existing.customer}" class="dialog"></p>
+				</form>
+			</div>
+			<!-- </Customer Information> -->
 			<!-- <Progress Bar> -->
 			<div id="orderProgress">
 				<form action="#" id="orderProgressForm">

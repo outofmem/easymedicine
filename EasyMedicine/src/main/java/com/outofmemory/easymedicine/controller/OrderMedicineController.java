@@ -16,9 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.outofmemory.easymedicine.form.OrderMedicineForm;
+import com.outofmemory.easymedicine.model.Customer;
 import com.outofmemory.easymedicine.model.OperatedCities;
 import com.outofmemory.easymedicine.service.OrderService;
 
@@ -52,6 +54,19 @@ public class OrderMedicineController {
 		model.addAttribute("activeSection", "preface");
 		model.addAttribute("cities", OperatedCities.values());
 		return "orderMedicineHome";
+	}
+
+	/**
+	 * Get customer information by his/her e-mail id
+	 * 
+	 * @param emailId
+	 *            The e-mail id of the customer
+	 * @return An instance of {@link Customer}
+	 */
+	@RequestMapping(value = "/getCustomer", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody
+	Customer getCustomer(@RequestParam String emailId) {
+		return orderService.getCustomer(emailId);
 	}
 
 	/**

@@ -48,12 +48,29 @@ $(function(){
 		addMedicineRow(true);
 	});
 	
+	//attach event handler for delete link beside each row for medicine
 	$("#medicineTable").delegate("a.delete", "click", function( e ) {
         e.preventDefault();
         //finding the grandparent of the link which is a row which needs to be removed
         var tr = $(this).parent().parent()[0];
         medicineTable.fnDeleteRow(tr);
     });
+	
+	var customer = undefined;
+	//Attach on change event handler of the customer e-mail id
+	$("#customerEmailId").change(function() {
+		var param = "emailId="+$(this).val();
+		$.ajax({ url: "./orderMedicine/getCustomer",
+	        data: param,
+	        type: "GET",
+	        success: function(response){
+	           	if(response) {
+	           		customer = response;
+	           		$("#customerInfoForm").dialog("open");
+	           	}
+	        }
+        });
+	});
 	
 	//attach submit event handler for order medicine form
 	$("#orderMedicineForm").submit(function(e){
@@ -81,6 +98,22 @@ $(function(){
 		});
 	});
 	
+	//initializing the existing customer confirmation dialog
+	$( "#customerInfoForm" ).dialog({
+		autoOpen: false,
+		width: 500,
+		height: 300,
+		modal: true,
+		buttons: {
+		  "Yes,Please": function() {
+			  populateCustomerInfo();
+		      $( this ).dialog( "close" );
+		  },
+		  "No,Thank You": function() {
+			  $( this ).dialog( "close" );
+		  }
+		}
+	});
 	//initializing the progress information dialog
 	$('#orderProgressForm').dialog({
 		autoOpen: false,
@@ -92,7 +125,7 @@ $(function(){
 	$( "#orderStatusForm" ).dialog({
 		autoOpen: false,
 		width: 500,
-		height: 300,
+		height: 350,
 		modal: true,
 		buttons: {
 		  "Ok": function() {
@@ -205,5 +238,20 @@ $(function(){
 	function closeProgressBar() {
 		$( "#progressBar" ).progressbar( "destroy" );
 		$( "#orderProgressForm" ).dialog( "close" );
+	}
+	
+	/**
+	 * populate the customer information
+	 */
+	function populateCustomerInfo() {
+		if(customer) {
+			$("#customerMobileNumber").val(customer.mobileNumber);
+			$("#customerName").val(customer.name);
+			$("#customerHouseNumber").val(customer.address.houseOrFlatNumber);
+			$("#customerHouseStreetAddress").val(customer.address.streetAddress);
+			$("#customerHouseLocality").val(customer.address.locality);
+			$("#customerHouseCity").val(customer.address.city);
+			$("#customerHousePin").val(customer.address.pin);
+		}
 	}
 });

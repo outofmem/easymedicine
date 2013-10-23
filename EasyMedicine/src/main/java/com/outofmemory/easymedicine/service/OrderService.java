@@ -51,6 +51,17 @@ public class OrderService extends NotificationService {
 	private MessageSource messageSource;
 
 	/**
+	 * Get the customer information by his/her e-mail id
+	 * 
+	 * @param emailId
+	 *            The e-mail id of the customer
+	 * @return An instance of {@link Customer}
+	 */
+	public Customer getCustomer(String emailId) {
+		return customerDao.findCustomerByEmailId(emailId);
+	}
+
+	/**
 	 * It search for nearby medicine stores who can serve the order. If found,
 	 * it places the order for bidding.
 	 * 
@@ -64,15 +75,7 @@ public class OrderService extends NotificationService {
 		if (CollectionUtils.isNotEmpty(nearByDistributors)) {
 			String customerId = updateCustomerInfo(form);
 			orderId = placeOrder(form, customerId);
-			for (Distributor distributor : nearByDistributors) {
-				OrderTransaction orderTransaction = new OrderTransaction();
-				orderTransaction.setOrderId(orderId);
-				orderTransaction.setCustomerId(customerId);
-				orderTransaction
-						.setDistributorId(distributor.getEmailAddress());
-
-				transactionDao.addOrderTransaction(orderTransaction);
-			}
+			notifyDistributors(nearByDistributors, orderId, customerId);
 
 			// send asynchronous notification to customer
 			sendNotification(form.getCustomerEmailId(),
@@ -87,6 +90,33 @@ public class OrderService extends NotificationService {
 		}
 
 		return orderId;
+	}
+
+	/**
+	 * Notify the nearby distributors to bid for the order
+	 * 
+	 * @param nearByDistributors
+	 * @param orderId
+	 * @param customerId
+	 */
+	private void notifyDistributors(List<Distributor> nearByDistributors,
+			String orderId, String customerId) {
+		for (Distributor distributor : nearByDistributors) {
+			OrderTransaction orderTransaction = new OrderTransaction();
+			orderTransaction.setOrderId(orderId);
+			orderTransaction.setCustomerId(customerId);
+			orderTransaction.setDistributorId(distributor.getEmailAddress());
+
+			transactionDao.addOrderTransaction(orderTransaction);
+			// send the bidding notification asynchronously to each nearby
+			// distributor
+			sendNotification(distributor.getEmailAddress(),
+					distributor.getMobileNumber(), messageSource.getMessage(
+							"bidding.notification.subject", new Object[0],
+							Locale.ENGLISH), messageSource.getMessage(
+							"bidding.notification.message", new Object[0],
+							Locale.ENGLISH));
+		}
 	}
 
 	/**
