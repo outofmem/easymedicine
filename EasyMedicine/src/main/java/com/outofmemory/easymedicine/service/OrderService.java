@@ -3,6 +3,7 @@
  */
 package com.outofmemory.easymedicine.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,6 +25,7 @@ import com.outofmemory.easymedicine.model.Customer;
 import com.outofmemory.easymedicine.model.Distributor;
 import com.outofmemory.easymedicine.model.Medicine;
 import com.outofmemory.easymedicine.model.Order;
+import com.outofmemory.easymedicine.model.OrderQueueItem;
 import com.outofmemory.easymedicine.model.OrderTransaction;
 
 /**
@@ -39,6 +41,8 @@ public class OrderService extends NotificationService {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(OrderService.class);
 
+	@Autowired
+	private OrderQueueProcessor orderQueueProcessor;
 	@Autowired
 	private DistributorDao distributorDao;
 	@Autowired
@@ -85,6 +89,9 @@ public class OrderService extends NotificationService {
 					messageSource.getMessage(
 							"order.confirmation.notification.message",
 							new Object[] { orderId }, Locale.ENGLISH));
+			// place the order to queue
+			orderQueueProcessor.addToOrderQueue(new OrderQueueItem(orderId,
+					new Date()));
 			LOGGER.debug("The order with ref no " + orderId
 					+ " is placed successfully.");
 		}
@@ -112,10 +119,10 @@ public class OrderService extends NotificationService {
 			// distributor
 			sendNotification(distributor.getEmailAddress(),
 					distributor.getMobileNumber(), messageSource.getMessage(
-							"bidding.notification.subject", new Object[0],
-							Locale.ENGLISH), messageSource.getMessage(
-							"bidding.notification.message", new Object[0],
-							Locale.ENGLISH));
+							"bidding.notification.subject",
+							new Object[] { orderId }, Locale.ENGLISH),
+					messageSource.getMessage("bidding.notification.message",
+							new Object[] { orderId }, Locale.ENGLISH));
 		}
 	}
 

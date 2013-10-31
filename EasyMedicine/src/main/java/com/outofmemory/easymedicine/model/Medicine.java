@@ -65,8 +65,7 @@ public class Medicine {
 	 */
 	@Override
 	public String toString() {
-		return "Medicine [name=" + name + ", power=" + power + ", quantity="
-				+ quantity + "]";
+		return name + " " + power + "(" + quantity + ")";
 	}
 
 }

@@ -3,6 +3,8 @@
  */
 package com.outofmemory.easymedicine.model;
 
+import org.bson.types.ObjectId;
+
 /**
  * The model class which contains the transaction information
  * 
@@ -11,10 +13,26 @@ package com.outofmemory.easymedicine.model;
  */
 public class OrderTransaction {
 
+	private ObjectId id;
 	private String orderId;
 	private String customerId;
 	private String distributorId;
 	private double cost;
+
+	/**
+	 * @return the id
+	 */
+	public ObjectId getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
 
 	/**
 	 * @return the orderId

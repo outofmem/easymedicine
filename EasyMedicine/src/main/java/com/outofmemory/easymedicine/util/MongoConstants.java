@@ -45,7 +45,9 @@ public final class MongoConstants {
 	public static final String KEY_MEDICINES = "medicines";
 	public static final String KEY_ORDER_ID = "orderId";
 	public static final String KEY_DISTRIBUTOR_ID = "distributorId";
+	public static final String KEY_COST = "cost";
 
 	// Mongo DB operators
 	public static final String OPERATOR_SET = "$set";
+	public static final String OPERATOR_IN = "$in";
 }

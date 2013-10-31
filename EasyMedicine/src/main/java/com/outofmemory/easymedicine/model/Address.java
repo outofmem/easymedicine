@@ -97,9 +97,8 @@ public class Address {
 	 */
 	@Override
 	public String toString() {
-		return "Address [houseOrFlatNumber=" + houseOrFlatNumber
-				+ ", streetAddress=" + streetAddress + ", locality=" + locality
-				+ ", city=" + city + ", pin=" + pin + "]";
+		return houseOrFlatNumber + "," + streetAddress + "," + locality + ","
+				+ city + "-" + pin;
 	}
 
 }

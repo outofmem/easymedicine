@@ -97,9 +97,7 @@ public class MedicineStore {
 	 */
 	@Override
 	public String toString() {
-		return "MedicineStore [name=" + name + ", address=" + address
-				+ ", locality=" + locality + ", city=" + city + ", pin=" + pin
-				+ "]";
+		return name + "," + address + "," + locality + "," + city + "-" + pin;
 	}
 
 }
