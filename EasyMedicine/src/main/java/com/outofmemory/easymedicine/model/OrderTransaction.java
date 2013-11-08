@@ -17,7 +17,7 @@ public class OrderTransaction {
 	private String orderId;
 	private String customerId;
 	private String distributorId;
-	private double cost;
+	private Double cost;
 
 	/**
 	 * @return the id
@@ -82,7 +82,7 @@ public class OrderTransaction {
 	/**
 	 * @return the cost
 	 */
-	public double getCost() {
+	public Double getCost() {
 		return cost;
 	}
 
@@ -90,7 +90,7 @@ public class OrderTransaction {
 	 * @param cost
 	 *            the cost to set
 	 */
-	public void setCost(double cost) {
+	public void setCost(Double cost) {
 		this.cost = cost;
 	}
 

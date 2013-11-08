@@ -10,9 +10,9 @@
  */
 $(function() {
 	//the section wrapper (includes all sections)
-	var distributorSectionWrapper   = $('#distributorSectionWrapper'),	 
+	var distributorSectionWrapper   = $('#distributorSectionWrapper'), 
 	//the active section value is set in hidden field
-	activeSectionVal = $('#activeSection').val();
+	activeSectionVal = $("#visibleSection").val();
 	//Hide those sections who does not have a class equal to the activeSectionVal.
 	//At a time just one section is active and visible
 	distributorSectionWrapper.children('div').each(function(i){

@@ -113,8 +113,10 @@ public class TransactionDao extends AbstractBaseDao {
 				MongoConstants.KEY_CUSTOMER_ID).toString());
 		transaction.setDistributorId(transactionObj.get(
 				MongoConstants.KEY_DISTRIBUTOR_ID).toString());
-		transaction.setCost(Double.valueOf(transactionObj.get(
-				MongoConstants.KEY_COST).toString()));
+		if (transactionObj.get(MongoConstants.KEY_COST) != null) {
+			transaction.setCost(new Double(transactionObj.get(
+					MongoConstants.KEY_COST).toString()));
+		}
 		return transaction;
 	}
 
