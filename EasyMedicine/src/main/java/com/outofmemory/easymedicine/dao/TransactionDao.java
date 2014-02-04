@@ -81,6 +81,23 @@ public class TransactionDao extends AbstractBaseDao {
 	}
 
 	/**
+	 * Get a list of order id by distributor id. The list contains only those
+	 * orders for which cost is not set
+	 * 
+	 * @param distributorId
+	 *            The id of the distributor
+	 * @return A list of order id
+	 */
+	public List<String> getOrdersByDistributorId(String distributorId) {
+		List<String> orders = new ArrayList<String>();
+		DBObject query = QueryBuilder.start(MongoConstants.KEY_DISTRIBUTOR_ID)
+				.is(distributorId).and(MongoConstants.KEY_COST)
+				.is(new BasicDBObject(MongoConstants.OPERATOR_EXISTS, false))
+				.get();
+		return orders;
+	}
+
+	/**
 	 * Remove the given transactions from the collection
 	 * 
 	 * @param transactions

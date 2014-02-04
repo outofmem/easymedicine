@@ -50,4 +50,5 @@ public final class MongoConstants {
 	// Mongo DB operators
 	public static final String OPERATOR_SET = "$set";
 	public static final String OPERATOR_IN = "$in";
+	public static final String OPERATOR_EXISTS = "$exists";
 }
